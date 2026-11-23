@@ -47,6 +47,8 @@ This repository only holds the releases and this guide. Report problems and idea
 4. **Restart Jellyfin.** Under **Dashboard → Plugins**, *Sia Storage* now shows as *Active*. Its settings are under
    **Dashboard → Plugins → Sia Storage**.
 
+   <img src="docs/screenshots/plugins.png" width="720" alt="Jellyfin's installed plugins, with Sia Storage shown as Active">
+
 > **Installed a build by hand before?** Stop Jellyfin and delete that copy first (usually a `SiaStorage` folder in
 > Jellyfin's `plugins` folder), or Jellyfin loads two copies. Your settings and keys are kept elsewhere and survive.
 
@@ -67,6 +69,8 @@ You don't need any media mappings for this.
 4. **Back up now.** The result shows at the top of the Backups tab when you reopen the page, and progress shows under
    **Dashboard → Scheduled Tasks**.
 
+<img src="docs/screenshots/backups.png" width="720" alt="The Backups tab: back up every day, the destination bucket and prefix, what to back up, how many to keep, and the backups in the bucket">
+
 Backups then run every day at 03:00; change the time in **Scheduled Tasks → Back up Jellyfin to Sia**. Each archive
 holds Jellyfin's database, settings, users and playlists (and metadata unless you untick it). It doesn't hold your
 media, or Sia Storage's own settings.
@@ -77,6 +81,8 @@ media, or Sia Storage's own settings.
 
 1. **Connection** tab: enter the s3d endpoint (for example `http://127.0.0.1:8000`) and your keys. **Save**, then
    **Test connection**.
+
+   <img src="docs/screenshots/connection.png" width="720" alt="The Connection tab: s3d endpoint, access and secret keys, options, and the optional s3d admin API">
 2. **Media** tab: enter the **public server URL**. **Save**, then **Test from the server**. It must say Jellyfin
    reaches its own URL; if not, follow the fixes it shows.
 3. **Media** tab: **Add mapping** for each library, for example:
@@ -90,6 +96,8 @@ media, or Sia Storage's own settings.
    Press **Check** in the dialog to see what's under the prefix (prefixes are case-sensitive), then **Done**, and
    **Save**. The first sync starts.
 4. In **Dashboard → Libraries**, add one library per mapping, pointed at its mirror folder.
+
+   <img src="docs/screenshots/media.png" width="720" alt="The Media tab: the public server URL test, the list of mappings, and recent syncs">
 
 Name files in the bucket the way Jellyfin expects on disk, for example `Movies/Sintel (2010)/Sintel (2010).mkv` or
 `Shows/Show Name/Season 01/S01E01 - Title.mp4`. Each mirror folder must be a new, empty folder of its own: the plugin
