@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "guid": "394c26ce-7000-4ae3-9f8d-aefab9f9e76d",
+    "versions": [
+      {
+        "version": "0.1.0.0",
+        "changelog": "First alpha, for testing on Jellyfin 12.0 to 12.4.\n\n- **Media on Sia:** mirror folders of an s3d bucket into Jellyfin libraries as `.strm` links, stream them through\n  Jellyfin with a memory and disk cache, and upload the metadata, artwork, subtitles and lyrics Jellyfin writes back\n  to the bucket. Syncs every 6 hours, on save, or on demand.\n- **Music:** `.strm` music plays on Jellyfin 12.x, which otherwise only plays `.strm` links for video.\n- **Mappings:** changing or removing a mapping cleans up the files the plugin wrote; the page checks each mapping,\n  previews what a change deletes, and asks first. Nothing in the bucket is ever deleted.\n- **Backups to Sia:** daily backups of Jellyfin's database and settings to an s3d bucket, with their own destination,\n  so they work without any media. Uploads are verified, the newest are kept, and a backup can be restored from the\n  plugin page.\n- **Settings page:** Connection, Media, Streaming, Backups and Advanced tabs, with tests for the s3d connection, the\n  public server URL and the backup destination.",
+        "targetAbi": "12.0.0.0",
+        "sourceUrl": "https://github.com/skunk-ink/jellyfin-plugin-siastorage-releases/releases/download/v0.1.0.0/sia-storage_0.1.0.0.zip",
+        "checksum": "4f1b342c2db2804e7e2931d14b955b3d",
+        "timestamp": "2026-11-23T16:05:34Z"
+      }
+    ],
+    "name": "Sia Storage",
+    "description": "Mirrors media stored in an s3d (Sia S3 gateway) bucket into Jellyfin libraries as .strm links, streams it through Jellyfin with caching, syncs Jellyfin-written metadata, artwork, subtitles and lyrics back to the bucket, and backs Jellyfin up to Sia.",
+    "overview": "Use Sia decentralized storage for your libraries, through an s3d endpoint",
+    "owner": "skunk-ink",
+    "category": "General"
+  }
+]
