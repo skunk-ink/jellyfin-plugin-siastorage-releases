@@ -1,0 +1,16 @@
+name: Source code request
+description: Ask for the source code of a release (it's GPL v3).
+labels: ["source request"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Release
+      placeholder: 0.1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: how
+    attributes:
+      label: How you'd like to receive it
+      description: For example, read access to the source repository for your GitHub account, or a source archive.

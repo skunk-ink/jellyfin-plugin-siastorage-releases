@@ -1,0 +1,74 @@
+name: Bug report
+description: Something doesn't work, or works wrongly.
+labels: ["bug", "alpha"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing. **Never paste access keys, secret keys, passwords or stream links** (`/SiaStorage/Stream/...` links carry a token). Remove them from logs first.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Media tab → Add mapping …
+        2. …
+  - type: input
+    id: plugin
+    attributes:
+      label: Plugin version
+      description: Dashboard → Plugins → Sia Storage.
+      placeholder: 0.1.0.0
+    validations:
+      required: true
+  - type: input
+    id: jellyfin
+    attributes:
+      label: Jellyfin version
+      placeholder: 12.4.0
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How Jellyfin runs
+      options:
+        - Docker
+        - Debian or Ubuntu package
+        - Windows
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: feature
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - Settings page
+        - Connection to s3d
+        - Mappings and sync
+        - Video playback
+        - Music playback
+        - Subtitles, artwork or metadata
+        - Backups
+        - Restore
+        - Install or update
+  - type: input
+    id: client
+    attributes:
+      label: Client, for playback problems
+      placeholder: Web (Firefox 140), Android app, Swiftfin, …
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log lines
+      description: Dashboard → Logs, the lines with `SiaStorage` around the time it happened. Remove keys and stream links first.
+      render: text
