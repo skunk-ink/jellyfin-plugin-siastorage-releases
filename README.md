@@ -5,8 +5,8 @@ Thanks for testing **Sia Storage**, a Jellyfin plugin that uses the [Sia](https:
 one on its own:
 
 - **Media on Sia:** keep movies, shows and music in an s3d bucket, and watch them in Jellyfin as normal libraries.
-- **Backups to Sia:** back Jellyfin's database and settings up to an s3d bucket every day, and restore them from the
-  plugin page.
+- **Backups to Sia:** back Jellyfin's database and settings up to an s3d bucket whenever you like or on a schedule,
+  and restore them from the plugin page.
 
 > **This is an alpha.** It works on our test servers, but expect rough edges. Test on a server you can afford to
 > break, or keep your own backup of Jellyfin's data folder. The plugin never deletes media from your bucket.
@@ -58,20 +58,25 @@ run Jellyfin with `network_mode: host`, or use `http://host.docker.internal:8000
 
 ## Set up backups
 
-You don't need any media mappings for this.
+You don't need any media mappings for this. Settings save on their own as you leave each field; the note next to
+the tabs says whether everything is saved.
 
-1. **Backups** tab: tick **Back up every day**, and enter the **Bucket**.
+1. **Backups** tab: enter the **Bucket**.
 2. Choose the connection:
    - leave **Use the s3d connection from the Connection tab** ticked, and fill in the **Connection** tab; or
    - untick it to give backups their own s3d endpoint and keys, for example a key that can only reach the backup
      bucket.
-3. **Save**, then **Test destination**. It writes and removes a small test object.
-4. **Back up now.** The result shows at the top of the Backups tab when you reopen the page, and progress shows under
+3. **Test destination.** It writes and removes a small test object.
+4. **Back up now.** The result shows at the top of the Backups tab when it's done, and progress also shows under
    **Dashboard → Scheduled Tasks**.
+5. Optionally, add a **Schedule** so backups also run on their own: every day or on chosen days at a set time, every
+   15 minutes to 7 days, or when Jellyfin starts. Several rules can be combined. There's no schedule until you add
+   one.
 
-<img src="docs/screenshots/backups.png" width="720" alt="The Backups tab: back up every day, the destination bucket and prefix, what to back up, how many to keep, and the backups in the bucket">
+<img src="docs/screenshots/backups.png" width="720" alt="The Backups tab: back up now, the destination bucket and prefix, the schedule, what to back up, how many to keep, and the backups in the bucket">
 
-Backups then run every day at 03:00; change the time in **Scheduled Tasks → Back up Jellyfin to Sia**. Each archive
+Times in the schedule are on the server's clock; the Schedule card shows the server's time. The schedule is the
+**Back up Jellyfin to Sia** task's, so it also shows under **Dashboard → Scheduled Tasks**. Each archive
 holds Jellyfin's database, settings, users and playlists (and metadata unless you untick it). It doesn't hold your
 media, or Sia Storage's own settings.
 
@@ -79,12 +84,12 @@ media, or Sia Storage's own settings.
 
 ## Set up media
 
-1. **Connection** tab: enter the s3d endpoint (for example `http://127.0.0.1:8000`) and your keys. **Save**, then
+1. **Connection** tab: enter the s3d endpoint (for example `http://127.0.0.1:8000`) and your keys, then press
    **Test connection**.
 
    <img src="docs/screenshots/connection.png" width="720" alt="The Connection tab: s3d endpoint, access and secret keys, options, and the optional s3d admin API">
-2. **Media** tab: enter the **public server URL**. **Save**, then **Test from the server**. It must say Jellyfin
-   reaches its own URL; if not, follow the fixes it shows.
+2. **Media** tab: enter the **public server URL**, then press **Test from the server**. It must say Jellyfin reaches
+   its own URL; if not, follow the fixes it shows.
 3. **Media** tab: **Add mapping** for each library, for example:
 
    | Name | Bucket | Prefix | Mirror folder | Content type |
@@ -93,8 +98,8 @@ media, or Sia Storage's own settings.
    | Shows | `media` | `Shows/` | `/media/sia/Shows` | Shows |
    | Music | `media` | `Music/` | `/media/sia/Music` | Music |
 
-   Press **Check** in the dialog to see what's under the prefix (prefixes are case-sensitive), then **Done**, and
-   **Save**. The first sync starts.
+   Press **Check** in the dialog to see what's under the prefix (prefixes are case-sensitive), then **Done**, which
+   saves the mapping. The first sync starts.
 4. In **Dashboard → Libraries**, add one library per mapping, pointed at its mirror folder.
 
    <img src="docs/screenshots/media.png" width="720" alt="The Media tab: the public server URL test, the list of mappings, and recent syncs">
@@ -115,7 +120,9 @@ Anything you'd normally do is useful. In particular:
   uploaded back to the bucket after a sync?
 - **Changing a mapping:** move its mirror folder, change its prefix, remove it. Does the page say clearly what will
   happen, and does it happen?
-- **Backups:** back up now, let a few daily backups run, set **Backups to keep** to 2 and check older ones go.
+- **Backups:** back up now, add a schedule (try a short interval such as every 15 minutes, then remove it), set
+  **Backups to keep** to 2 and check older ones go.
+- **Saving:** settings save as you leave each field. Does anything ever not stick after reopening the page?
 - **Restore** (only on a server you can reset): **Backups in the bucket → Refresh → Restore**. Jellyfin restarts with
   the backed-up state.
 
