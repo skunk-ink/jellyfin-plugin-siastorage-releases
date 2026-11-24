@@ -158,8 +158,3 @@ else. Include:
   libraries that pointed at mirror folders. The plugin's own data stays in Jellyfin's data folder under
   `sia-storage/` (the mirror folders, unless you chose others, and `state/` with its database and keys); delete it
   if you don't plan to come back. Nothing in your buckets is touched.
-
-## License and source code
-
-Sia Storage is free software under the [GNU General Public License v3](LICENSE). If you received a release, you're
-entitled to its source code: open a **Source code request** [issue](../../issues/new/choose) and you'll be given it.
